@@ -5,8 +5,7 @@ pub mod errors;
 pub mod hostfn;
 pub mod modules;
 pub mod rotations;
-use crate as bot;
-pub use bot::core::*;
+pub use crate::core::*;
 pub use rbot_messages::messages;
 
 /// Allocates a memory buffer in the robot's sandbox environment for storing
@@ -43,7 +42,7 @@ pub extern "C" fn alloc_wasm(size: i32) -> i32 {
 /// Prevents Rust compiler optimizations that could hinder robot booting.
 #[no_mangle]
 pub extern "C" fn dummy() {
-    bot::core::print("Hello World");
-    bot::core::sleep(100.);
-    bot::core::use_component(0, false).unwrap();
+    core::print("Hello World");
+    core::sleep(100.);
+    core::use_component(0, false).unwrap();
 }
