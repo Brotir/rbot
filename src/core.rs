@@ -22,15 +22,13 @@ use rbot_messages::MessageType;
 /// # Examples
 ///
 /// ```
-/// use bot;
-///
 /// // Trigger the first component to fire (if cooldown is ready).
-/// let result = bot::use_component(0, false);
+/// let result = rbot::use_component(0, false);
 ///
 /// // If something went wrong in the communication with the server, print it
 /// // out to the game console.
 /// if result.err {
-///     bot::print("Failed communicating with the server when calling `use_component`.")
+///     rbot::print("Failed communicating with the server when calling `use_component`.")
 /// }
 /// ```
 pub fn use_component(component_id: i32, sticky: bool) -> Result<(), MessageError> {
@@ -76,14 +74,12 @@ pub fn use_component(component_id: i32, sticky: bool) -> Result<(), MessageError
 /// # Examples
 ///
 /// ```
-/// use bot;
-///
-/// let result = bot::velocity(1.0, 0.5, 0.8);
+/// let result = rbot::velocity(1.0, 0.5, 0.8);
 ///
 /// // If something went wrong in the communication with the server, print it
 /// // out to the game console.
 /// if result.err {
-///     bot::print("Failed communicating with the server when calling `velocity`.")
+///     rbot::print("Failed communicating with the server when calling `velocity`.")
 /// }
 /// ```
 pub fn velocity(x: f32, y: f32, speed: f32) -> Result<(), MessageError> {
@@ -112,14 +108,12 @@ pub fn velocity(x: f32, y: f32, speed: f32) -> Result<(), MessageError> {
 /// # Examples
 ///
 /// ```
-/// use bot;
-///
-/// let result = bot::rotate(90.0);
+/// let result = rbot::rotate(90.0);
 ///
 /// // If something went wrong in the communication with the server, print it
 /// // out to the game console.
 /// if result.err {
-///     bot::print("Failed communicating with the server when calling `use_component`.")
+///     rbot::print("Failed communicating with the server when calling `use_component`.")
 /// }
 /// ```
 pub fn rotate(angle: f32) -> Result<(), MessageError> {
@@ -156,10 +150,8 @@ pub fn rotate(angle: f32) -> Result<(), MessageError> {
 /// # Examples
 ///
 /// ```
-/// use bot;
-///
 /// let is_at_angle = at_rotation(0, 90, 0.5)?;
-/// bot::print(&format!("Component 0 is at angle 90 degrees: {is_at_angle}"));
+/// rbot::print(&format!("Component 0 is at angle 90 degrees: {is_at_angle}"));
 /// ```
 pub fn at_rotation(component_id: i32, angle: f32, slack: f32) -> Result<bool, MessageError> {
     let target_angle = rotations::transform_rotation_to_component(component_id, angle);
@@ -196,14 +188,12 @@ pub fn at_rotation(component_id: i32, angle: f32, slack: f32) -> Result<bool, Me
 /// # Examples
 ///
 /// ```
-/// use bot;
-///
-/// let result = bot::aim(0, 90);
+/// let result = rbot::aim(0, 90);
 ///
 /// // If something went wrong in the communication with the server, print it
 /// // out to the game console.
 /// if result.err {
-///     bot::print("Failed communicating with the game server.")
+///     rbot::print("Failed communicating with the game server.")
 /// }
 /// ```
 pub fn aim(component_id: i32, angle: f32) -> Result<(), MessageError> {
@@ -232,14 +222,12 @@ pub fn aim(component_id: i32, angle: f32) -> Result<(), MessageError> {
 /// # Examples
 ///
 /// ```
-/// use bot;
-///
-/// let result = bot::await_aim(0, 90, 0.5);
+/// let result = rbot::await_aim(0, 90, 0.5);
 ///
 /// // If something went wrong in the communication with the server, print it
 /// // out to the game console.
 /// if result.err {
-///     bot::print("Failed communicating with the game server.")
+///     rbot::print("Failed communicating with the game server.")
 /// }
 /// ```
 pub fn await_aim(component_id: i32, angle: f32, slack: f32) -> Result<(), MessageError> {
@@ -269,8 +257,6 @@ pub fn await_aim(component_id: i32, angle: f32, slack: f32) -> Result<(), Messag
 /// # Examples
 ///
 /// ```
-/// use bot;
-///
 /// await_component(0)?;
 /// use_component(0)?;
 /// ```
@@ -296,8 +282,6 @@ pub fn await_component(component_id: i32) -> Result<(), MessageError> {
 /// # Examples
 ///
 /// ```
-/// use bot;
-///
 /// let robot_state = state()?;
 /// ```
 pub fn state() -> Result<msg::RMsgState, MessageError> {
@@ -329,9 +313,7 @@ pub fn state() -> Result<msg::RMsgState, MessageError> {
 /// # Examples
 ///
 /// ```
-/// use bot;
-///
-/// let component_status = bot::component_status(0)?;
+/// let component_status = rbot::component_status(0)?;
 /// ```
 pub fn component_state(component_id: i32) -> Result<msg::RMsgComponentStatus, MessageError> {
     let msg_comp_state = msg::MsgComponentStatusQuery { component_id };
@@ -356,11 +338,9 @@ pub fn component_state(component_id: i32) -> Result<msg::RMsgComponentStatus, Me
 /// # Examples
 ///
 /// ```
-/// use bot;
-///
-/// bot::print("Starting to wait...");
-/// bot::sleep(2.5);
-/// bot::print("Waited for 2.5 seconds.");
+/// rbot::print("Starting to wait...");
+/// rbot::sleep(2.5);
+/// rbot::print("Waited for 2.5 seconds.");
 /// ```
 pub fn sleep(seconds: f32) {
     unsafe { hostfn::sleep(seconds) };
@@ -405,9 +385,7 @@ pub fn random() -> f32 {
 /// # Examples
 ///
 /// ```
-/// use bot;
-///
-/// bot::print("Hello World");
+/// rbot::print("Hello World");
 /// ```
 pub fn print(string: &str) {
     let size = string.len() as i32;
@@ -430,9 +408,7 @@ pub fn print(string: &str) {
 /// # Examples
 ///
 /// ```
-/// use bot;
-///
-/// let timestamp = bot::time()?;
+/// let timestamp = rbot::time()?;
 /// ```
 pub fn time() -> Result<f32, MessageError> {
     let msg_comp_state = msg::MsgTime { value: 0 };

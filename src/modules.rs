@@ -47,9 +47,7 @@ macro_rules! match_message {
 /// # Examples
 ///
 /// ```
-/// use bot;
-///
-/// let radar_status = bot::modules::status(Module::Radar)?;
+/// let radar_status = rbot::modules::status(Module::Radar)?;
 /// ```
 pub fn status(module: Module) -> Result<msg::RMsgModuleStatus, MessageError> {
     let msg = msg::MsgModuleStatusQuery {
@@ -66,12 +64,10 @@ pub fn status(module: Module) -> Result<msg::RMsgModuleStatus, MessageError> {
 /// # Examples
 ///
 /// ```
-/// use bot;
-///
 /// // Wait for the cooldown of the module to expire.
-/// bot::modules::await_cooldown(Module.Radar);
+/// rbot::modules::await_cooldown(Module.Radar);
 /// // Now we can use the module and get a valid response.
-/// let radar_msg = bot::modules::radar()?;
+/// let radar_msg = rbot::modules::radar()?;
 /// ```
 pub fn await_module(module: Module) -> Result<(), MessageError> {
     while status(module)?.cooldown > 0.0 {
@@ -103,9 +99,7 @@ pub fn await_module(module: Module) -> Result<(), MessageError> {
 /// # Examples
 ///
 /// ```
-/// use bot;
-///
-/// let result = bot::modules::teleport(10, 2);
+/// let result = rbot::modules::teleport(10, 2);
 /// ```
 pub fn teleport(x: f32, y: f32) -> Result<msg::MsgEmpty, MessageError> {
     let msg = msg::MsgTeleport { x, y };
@@ -128,9 +122,7 @@ pub fn teleport(x: f32, y: f32) -> Result<msg::MsgEmpty, MessageError> {
 /// # Examples
 ///
 /// ```
-/// use bot;
-///
-/// let radar_msg = bot::modules::radar()?;
+/// let radar_msg = rbot::modules::radar()?;
 /// ```
 pub fn radar() -> Result<msg::RMsgRadar, MessageError> {
     let msg = msg::MsgRadar { value: 0 };
@@ -163,9 +155,7 @@ pub fn radar() -> Result<msg::RMsgRadar, MessageError> {
 /// # Examples
 ///
 /// ```
-/// use bot;
-///
-/// let laser_msg = bot::laser(45)?;
+/// let laser_msg = rbot::laser(45)?;
 /// ```
 pub fn laser(angle: f32) -> Result<msg::RMsgLaser, MessageError> {
     let msg = msg::MsgLaser { angle };
@@ -185,9 +175,7 @@ pub fn laser(angle: f32) -> Result<msg::RMsgLaser, MessageError> {
 /// # Examples
 ///
 /// ```
-/// use bot;
-///
-/// let result = bot::modules::force_field();
+/// let result = rbot::modules::force_field();
 /// ```
 pub fn force_field() -> Result<msg::MsgEmpty, MessageError> {
     let msg = msg::MsgForceField { value: 0 };
@@ -208,9 +196,7 @@ pub fn force_field() -> Result<msg::MsgEmpty, MessageError> {
 /// # Examples
 ///
 /// ```
-/// use bot;
-///
-/// let result = bot::modules::mine();
+/// let result = rbot::modules::mine();
 /// ```
 pub fn mine() -> Result<msg::MsgEmpty, MessageError> {
     let msg = msg::MsgMine { value: 0 };
@@ -236,9 +222,7 @@ pub fn mine() -> Result<msg::MsgEmpty, MessageError> {
 /// # Examples
 ///
 /// ```
-/// use bot;
-///
-/// let healed_amount = bot::modules::repair(0);
+/// let healed_amount = rbot::modules::repair(0);
 /// ```
 pub fn repair(component_id: i32) -> Result<msg::RMsgRepair, MessageError> {
     let msg = msg::MsgRepair { component_id };
@@ -269,9 +253,7 @@ pub fn repair(component_id: i32) -> Result<msg::RMsgRepair, MessageError> {
 /// # Examples
 ///
 /// ```
-/// use bot;
-///
-/// let result = bot::modules::thrust(0);
+/// let result = rbot::modules::thrust(0);
 /// ```
 pub fn thrust(angle: f32) -> Result<msg::MsgEmpty, MessageError> {
     let msg = msg::MsgThrust { angle };
@@ -292,9 +274,7 @@ pub fn thrust(angle: f32) -> Result<msg::MsgEmpty, MessageError> {
 /// # Examples
 ///
 /// ```
-/// use bot;
-///
-/// let scan_results = bot::modules::scan()?;
+/// let scan_results = rbot::modules::scan()?;
 /// ```
 pub fn scan() -> Result<msg::RMsgScan, MessageError> {
     let msg = msg::MsgScan { value: 0 };
@@ -314,9 +294,7 @@ pub fn scan() -> Result<msg::RMsgScan, MessageError> {
 /// # Examples
 ///
 /// ```
-/// use bot;
-///
-/// let position = bot::modules::gps()?;
+/// let position = rbot::modules::gps()?;
 /// ```
 pub fn gps() -> Result<msg::RMsgGPS, MessageError> {
     let msg = msg::MsgGPS { value: 0 };

@@ -70,12 +70,10 @@ pub fn transform_rotation_from_component(component_id: i32, angle: f32) -> f32 {
 /// # Examples
 ///
 /// ```
-/// use bot;
-///
 /// let angle1 = 30.0;
 /// let angle2 = 350.0;
-/// let distance = bot::rotations::angle_distance(angle1, angle2);
-/// bot::print(&format!("Angular distance: {:.2} degrees", distance));
+/// let distance = rbot::rotations::angle_distance(angle1, angle2);
+/// rbot::print(&format!("Angular distance: {:.2} degrees", distance));
 /// ```
 pub fn angle_distance(angle: f32, other_angle: f32) -> f32 {
     let angle_difference = angle - other_angle;
