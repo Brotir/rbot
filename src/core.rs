@@ -2,8 +2,8 @@ use crate::errors::MessageError;
 use crate::hostfn;
 use crate::rotations;
 use crate::rotations::transform_rotation_to_component;
-use rice_coder::messages as msg;
-use rice_coder::MessageType;
+use rbot_messages::messages as msg;
+use rbot_messages::MessageType;
 
 /// Fires the component with the specified `component_id`.
 ///

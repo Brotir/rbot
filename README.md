@@ -1,3 +1,3 @@
 # Bot
-Library for handling core robot functions in game.
+Library for programming robots in Bot Beats.
 

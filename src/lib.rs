@@ -7,7 +7,7 @@ pub mod modules;
 pub mod rotations;
 use crate as bot;
 pub use bot::core::*;
-pub use rice_coder::messages;
+pub use rbot_messages::messages;
 
 /// Allocates a memory buffer in the robot's sandbox environment for storing
 /// data from the host environment.

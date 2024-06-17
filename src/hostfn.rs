@@ -1,5 +1,5 @@
-use rice_coder::messages as msg;
-use rice_coder::{Message, MessageIdentity, MessageType};
+use rbot_messages::messages as msg;
+use rbot_messages::{Message, MessageIdentity, MessageType};
 use serde::Serialize;
 
 extern "C" {
@@ -88,7 +88,7 @@ pub fn send_message<M: Message + MessageIdentity + Serialize>(msg: &M) -> Messag
     unsafe {
         // Send message byte
         // [Type Size Bytes]
-        let byte_msg = rice_coder::serialize_message(msg).unwrap();
+        let byte_msg = rbot_messages::serialize_message(msg).unwrap();
         let result_ptr = tcp_send(
             std::ptr::addr_of!(byte_msg[0]) as i32,
             byte_msg.len() as i32,

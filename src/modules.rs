@@ -1,8 +1,8 @@
 use crate::core;
 use crate::errors::MessageError;
 use crate::hostfn;
-use rice_coder::messages as msg;
-use rice_coder::MessageType;
+use rbot_messages::messages as msg;
+use rbot_messages::MessageType;
 use strum_macros::EnumIter;
 
 #[derive(Debug, EnumIter, Clone, Copy)]
