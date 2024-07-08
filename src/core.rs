@@ -313,7 +313,7 @@ pub fn state() -> Result<msg::RMsgState, MessageError> {
 /// # Examples
 ///
 /// ```
-/// let component_status = rbot::component_status(0)?;
+/// let component_state = rbot::component_state(0)?;
 /// ```
 pub fn component_state(component_id: i32) -> Result<msg::RMsgComponentStatus, MessageError> {
     let msg_comp_state = msg::MsgComponentStatusQuery { component_id };
