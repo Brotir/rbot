@@ -4,6 +4,7 @@ pub mod core;
 pub mod errors;
 pub mod hostfn;
 pub mod modules;
+pub mod print_macros;
 pub mod rotations;
 pub use crate::core::*;
 pub use rbot_messages::messages;

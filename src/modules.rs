@@ -124,6 +124,30 @@ pub fn teleport(x: f32, y: f32) -> Result<msg::MsgEmpty, MessageError> {
 /// ```
 /// let radar_msg = rbot::modules::radar()?;
 /// ```
+///
+/// Below is an example to use radar to aim and shoot at your enemy:
+/// ```
+/// loop {
+///     // Wait for the radar to not have cooldown.
+///     rbot::modules::await_module(rbot::modules::Module::Radar);
+///
+///     // Get the message from the radar.
+///     let radar_message = rbot::modules::radar().expect("unexpected failure calling radar");
+///
+///     // Convert the xy position (from the radar) into an angle to aim.
+///     let angle = rbot::conversions::xy_to_angle(radar_message.x, radar_message.y);
+///     for i in 0..4 {
+///         // Aim the specified component towards the enemy.
+///         rbot::await_aim(i, angle, 0.5);
+///
+///         // Wait for the component to be ready to use.
+///         rbot::await_component(i);
+///
+///         // Use the specific component.
+///         rbot::use_component(i, false);
+///     }
+/// }
+/// ```
 pub fn radar() -> Result<msg::RMsgRadar, MessageError> {
     let msg = msg::MsgRadar { value: 0 };
     match_message!(msg, MessageType::RRadar(m) => Ok(m))
@@ -156,6 +180,21 @@ pub fn radar() -> Result<msg::RMsgRadar, MessageError> {
 ///
 /// ```
 /// let laser_msg = rbot::laser(45)?;
+/// ```
+///
+/// Below is an example function that uses the laser to find the enemy (if it is not obstructed):
+/// ```
+/// fn laser_search_enemy() -> Option<RMsgLaser> {
+///    for angle in 0..360 {
+///        let laser_message = rbot::modules::laser(angle as f32);
+///        if let Ok(laser_message) = laser_message {
+///            if laser_message.tag == rbot::constants::tag::COMPONENT {
+///                return Some(laser_message);
+///            }
+///        }
+///    }
+///    None
+/// }
 /// ```
 pub fn laser(angle: f32) -> Result<msg::RMsgLaser, MessageError> {
     let msg = msg::MsgLaser { angle };
@@ -275,6 +314,28 @@ pub fn thrust(angle: f32) -> Result<msg::MsgEmpty, MessageError> {
 ///
 /// ```
 /// let scan_results = rbot::modules::scan()?;
+/// ```
+///
+/// Below is an example function to use the scanner to find the average enemy position (if the enemy is in range of the scanner):
+/// ```
+/// pub fn scan_for_average_bot_component() -> Option<[f32;2]> {
+///    let scan_msg = rbot::modules::scan().ok()?;
+///    let components: Vec<_> = scan_msg
+///        .objects
+///        .into_iter()
+///        .filter(|o| o.tag == rbot::constants::tag::COMPONENT)
+///        .collect();
+///
+///    if components.len() == 0 {
+///        return None;
+///    }
+///
+///    // Find the average position of the components.
+///    let x: f32 = components.iter().map(|c| c.x).sum::<f32>() / components.len() as f32;
+///    let y: f32 = components.iter().map(|c| c.y).sum::<f32>() / components.len() as f32;
+///
+///    Some([x, y])
+///}
 /// ```
 pub fn scan() -> Result<msg::RMsgScan, MessageError> {
     let msg = msg::MsgScan { value: 0 };
