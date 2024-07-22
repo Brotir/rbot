@@ -68,7 +68,14 @@ If you encounter any issues, have questions, or need further assistance, please 
 
 ## Contributing
 
-(Coming soon)
+We welcome contributions from everyone! To ensure consistency, please adhere to the existing code style in the repository. Here are some guidelines to keep in mind:
+
+- Code Style: Match the current code base style.
+- Simplicity: We like simple functions with clear, informative docstrings.
+- Avoid Overcomplication: Only introduce complexity when absolutely necessary [grub](https://grugbrain.dev/).
+- Multi-Paradigm Approach: We believe in using the right tool for the job. Adapt your solution to the problem, rather than forcing the problem to fit a particular tool or paradigm.
+
+Thank you for your interest in contributing!
 
 ## License
 
