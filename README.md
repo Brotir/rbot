@@ -75,6 +75,8 @@ We welcome contributions from everyone! To ensure consistency, please adhere to 
 - Avoid Overcomplication: Only introduce complexity when absolutely necessary [grub](https://grugbrain.dev/).
 - Multi-Paradigm Approach: We believe in using the right tool for the job. Adapt your solution to the problem, rather than forcing the problem to fit a particular tool or paradigm.
 
+The repository is hosted on GitHub: [https://github.com/Brotir/rbot](https://github.com/Brotir/rbot).
+
 Thank you for your interest in contributing!
 
 ## License

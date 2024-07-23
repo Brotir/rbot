@@ -1,9 +1,11 @@
 [package]
 name = "rbot"
-version = "0.1.4"
+version = "0.1.5"
 edition = "2021"
 description = "Library for programming robots in Bot Beats."
 license = "Apache-2.0"
+repository = "https://github.com/Brotir/rbot"
+homepage = "https://botbeats.net"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 

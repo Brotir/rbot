@@ -1,3 +1,42 @@
+//! Here’s a simple example to get you started. This program makes your robot
+//! move upward, uses the radar module to locate an enemy robot, and then fires
+//! a component towards it. The `#![allow(unused_must_use)]` attribute is used to
+//! suppress warnings about unused results from certain function calls.
+//!
+//! ```rust
+//! // usr_main.rs
+//! #![allow(unused_must_use)]
+//! use rbot;
+//!
+//! pub fn main() {
+//!     // Move the robot upward with the specified velocity
+//!     rbot::velocity(0.0, 1.0, 1.0);
+//!
+//!     // Wait for the Radar module to become available
+//!     rbot::modules::await_module(rbot::modules::Module::Radar);
+//!
+//!     // Retrieve the radar message, which contains the position of the enemy robot
+//!     let radar_msg = rbot::modules::radar().expect("failed to get radar message");
+//!
+//!     // Convert the enemy's position (x, y coordinates) to an angle
+//!     let angle = rbot::conversions::xy_to_angle(radar_msg.x, radar_msg.y);
+//!
+//!     // Aim at the enemy robot using the calculated angle
+//!     rbot::await_aim(2, angle, 0.5);
+//!
+//!     // Wait for the component to be ready
+//!     rbot::await_component(2);
+//!
+//!     // Fire the component towards the enemy robot
+//!     rbot::use_component(2, false);
+//! }
+//! ```
+//!
+//! For more detailed documentation, please visit our Discord channel,
+//! accessible through our website:
+//! [https://botbeats.net](https://botbeats.net). If you have any questions,
+//! feel free to reach out to us on Discord.
+
 pub mod constants;
 pub mod conversions;
 pub mod core;
