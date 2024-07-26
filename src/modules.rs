@@ -1,3 +1,4 @@
+use crate::await_action;
 use crate::core;
 use crate::errors::MessageError;
 use crate::hostfn;
@@ -70,6 +71,7 @@ pub fn status(module: Module) -> Result<msg::RMsgModuleStatus, MessageError> {
 /// let radar_msg = rbot::modules::radar()?;
 /// ```
 pub fn await_module(module: Module) -> Result<(), MessageError> {
+    await_action()?;
     while status(module)?.cooldown > 0.0 {
         core::sleep(0.01);
     }

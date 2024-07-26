@@ -261,7 +261,43 @@ pub fn await_aim(component_id: i32, angle: f32, slack: f32) -> Result<(), Messag
 /// use_component(0)?;
 /// ```
 pub fn await_component(component_id: i32) -> Result<(), MessageError> {
+    await_action()?;
     while component_state(component_id)?.cooldown > 0.0 {
+        sleep(0.01);
+    }
+    Ok(())
+}
+
+/// Awaits until a component is no longer activated.
+///
+/// This function blocks execution until the specified component is no longer activated,
+/// repeatedly checking the component's state and sleeping for a short duration between checks.
+///
+/// # Parameters
+///
+/// * `component_id` - The ID of the component to monitor.
+///
+/// # Returns
+///
+/// * `Ok(())` - if the component is no longer activated.
+/// * `Err(MessageError)` - if an error occurs, with details about the specific error.
+///
+/// # Errors
+///
+/// This function can return the following errors:
+///
+/// * `MessageError::BadCommand` - if there is an issue with the command sent to the game.
+/// * `MessageError::InvalidResponse` - if the response from the game is not as expected.
+///
+/// # Examples
+///
+/// ```
+/// // Wait for the component with ID 0 to no longer be activated.
+/// rbot::await_is_activated(0)?;
+/// ```
+pub fn await_is_activated(component_id: i32) -> Result<(), MessageError> {
+    await_action()?;
+    while component_state(component_id)?.is_activated {
         sleep(0.01);
     }
     Ok(())
@@ -411,12 +447,59 @@ pub fn print(string: &str) {
 /// let timestamp = rbot::time()?;
 /// ```
 pub fn time() -> Result<f32, MessageError> {
-    let msg_comp_state = msg::MsgTime { value: 0 };
-    let response = hostfn::send_message(&msg_comp_state);
+    let msg_time = msg::MsgTime { value: 0 };
+    let response = hostfn::send_message(&msg_time);
 
     match response {
         MessageType::Error(m) => Err(MessageError::BadCommand(m.error_code)),
         MessageType::RTime(m) => Ok(m.timestamp),
+        _ => Err(MessageError::InvalidResponse),
+    }
+}
+
+/// Awaits the completion of a game action trigger.
+///
+/// This function sends a message to the game to await an action, which is crucial
+/// for checking the status of a component after it has been used.
+///
+/// # Returns
+///
+/// * `Ok(())` - if the action completes successfully.
+/// * `Err(MessageError)` - if an error occurs, with details about the specific error.
+///
+/// # Errors
+///
+/// This function can return the following errors:
+///
+/// * `MessageError::BadCommand` - if there is an issue with the command sent to the game.
+/// * `MessageError::InvalidResponse` - if the response from the game is not as expected.
+///
+/// # Examples
+///
+/// ```
+/// // Wait for the component to be ready.
+/// rbot::await_component(0)?;
+///
+/// // Send a command to the game server indicating the robot's intention to
+/// // use weapon 0 in the next action loop. This does NOT trigger the weapon
+/// // immediately. Checking the cooldown directly after this might still show 0.
+/// rbot::use_component(0, false)?;
+///
+/// // This will pause execution until the robot's action is performed.
+/// // After this, the cooldown will no longer be 0, and `is_activated`
+/// // will be true if the component has an active time.
+/// rbot::await_action()?;
+///
+/// // Now, retrieving the component state will show the updated cooldown.
+/// let component_state = rbot::component_state()?;
+/// ```
+pub fn await_action() -> Result<(), MessageError> {
+    let msg_await_action = msg::MsgAwaitAction { value: 0 };
+    let response = hostfn::send_message(&msg_await_action);
+
+    match response {
+        MessageType::Error(m) => Err(MessageError::BadCommand(m.error_code)),
+        MessageType::Empty(_) => Ok(()),
         _ => Err(MessageError::InvalidResponse),
     }
 }
