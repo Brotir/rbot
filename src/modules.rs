@@ -16,7 +16,7 @@ pub enum Module {
     Repair,
     Thruster,
     Scanner,
-    GPS,
+    Gps,
 }
 
 /// Macro for handling the incomming message.
