@@ -293,9 +293,9 @@ pub fn await_component(component_id: i32) -> Result<(), MessageError> {
 ///
 /// ```
 /// // Wait for the component with ID 0 to no longer be activated.
-/// rbot::await_is_activated(0)?;
+/// rbot::await_not_activated(0)?;
 /// ```
-pub fn await_is_activated(component_id: i32) -> Result<(), MessageError> {
+pub fn await_not_activated(component_id: i32) -> Result<(), MessageError> {
     await_action()?;
     while component_state(component_id)?.is_activated {
         sleep(0.01);
