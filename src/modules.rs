@@ -1,4 +1,5 @@
 use crate::await_action;
+use crate::constants;
 use crate::core;
 use crate::errors::MessageError;
 use crate::hostfn;
@@ -342,6 +343,69 @@ pub fn thrust(angle: f32) -> Result<msg::MsgEmpty, MessageError> {
 pub fn scan() -> Result<msg::RMsgScan, MessageError> {
     let msg = msg::MsgScan { value: 0 };
     match_message!(msg, MessageType::RScan(m) => Ok(m))
+}
+
+/// Scans for the average position of the components of an enemy bot, if any are found.
+///
+/// This function is useful for locating the center of an enemy bot. It attempts to find
+/// the position of the motherboard first. If the motherboard is not found, it calculates
+/// and returns the average position of the bot's components. If no components are found,
+/// it returns `None`.
+///
+/// # Returns
+///
+/// * `Ok(Some(msg::RMsgScanObject))` - containing the position of the motherboard if found,
+///   or the average position of the components.
+/// * `Ok(None)` - if no components are found.
+/// * `Err(MessageError)` - if an error occurs during the scan.
+///
+/// # Examples
+///
+/// ```
+/// // Scan for the enemy bot and get its average position or motherboard position.
+/// match rbot::scan_for_bot()? {
+///     Some(bot_position) => rbot::println!("Bot position: ({}, {})", bot_position.x, bot_position.y),
+///     None => rbot::println!("No bot components found."),
+/// }
+/// ```
+pub fn scan_for_bot() -> Result<Option<msg::RMsgScanObject>, MessageError> {
+    let scan_msg = scan()?;
+    let components: Vec<_> = scan_msg
+        .objects
+        .into_iter()
+        .filter(|o| o.tag == crate::constants::tag::COMPONENT)
+        .collect();
+
+    if components.len() == 0 {
+        return Ok(None);
+    }
+
+    let motherboard = components
+        .iter()
+        .find(|c| c.kind == constants::kind::MOTHERBOARD);
+
+    // If the motherboard is found, return its position and information
+    if let Some(motherboard) = motherboard {
+        return Ok(Some(msg::RMsgScanObject {
+            x: motherboard.x,
+            y: motherboard.y,
+            tag: constants::tag::BOT.into(),
+            kind: "".into(),
+            buffs: motherboard.buffs.to_owned(),
+        }));
+    }
+
+    // Calculate the average position of the components if the motherboard is not found
+    let x: f32 = components.iter().map(|c| c.x).sum::<f32>() / components.len() as f32;
+    let y: f32 = components.iter().map(|c| c.y).sum::<f32>() / components.len() as f32;
+
+    Ok(Some(msg::RMsgScanObject {
+        x,
+        y,
+        tag: constants::tag::BOT.into(),
+        kind: "".into(),
+        buffs: vec![],
+    }))
 }
 
 /// Retrieves the absolute position (`x`, `y`) of the robot from the center of the map using GPS.
