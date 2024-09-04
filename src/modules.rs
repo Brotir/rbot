@@ -3,11 +3,12 @@ use crate::constants;
 use crate::core;
 use crate::errors::MessageError;
 use crate::hostfn;
+use num_derive::FromPrimitive;
 use rbot_messages::messages as msg;
 use rbot_messages::MessageType;
 use strum_macros::EnumIter;
 
-#[derive(Debug, EnumIter, Clone, Copy)]
+#[derive(Debug, EnumIter, Clone, Copy, FromPrimitive)]
 pub enum Module {
     Teleporter = 0,
     Radar,

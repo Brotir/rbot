@@ -379,7 +379,7 @@ pub fn component_state(component_id: i32) -> Result<msg::RMsgComponentStatus, Me
 /// rbot::print("Waited for 2.5 seconds.");
 /// ```
 pub fn sleep(seconds: f32) {
-    unsafe { hostfn::sleep(seconds) };
+    unsafe { hostfn::bot_sleep(seconds) };
 }
 
 /// Generates a pseudo-random floating-point number between 0 (inclusive) and 1 (includive).

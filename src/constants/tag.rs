@@ -1,5 +1,6 @@
 pub const BOT: &str = "Bot";
 pub const COMPONENT: &str = "BotComponent";
+pub const HAMMER: &str = "Hammer";
 pub const MINE: &str = "Mine";
 pub const OIL: &str = "Oil";
 pub const PLASMA_SHIELD: &str = "PlasmaShield";

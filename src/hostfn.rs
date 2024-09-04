@@ -49,7 +49,7 @@ extern "C" {
     pub fn dbg_log(bytes_ptr: i32, size: i32);
 
     /// Blocks the thread and put it to sleep for x milliseconds
-    pub fn sleep(seconds: f32);
+    pub fn bot_sleep(seconds: f32);
 
     /// Generates a random floating-point value between 0 (inclusive) and 1 (inclusive).
     ///
