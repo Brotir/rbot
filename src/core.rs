@@ -406,7 +406,7 @@ pub fn sleep(seconds: f32) {
 /// }
 /// ```
 pub fn random() -> f32 {
-    unsafe { hostfn::random() }
+    unsafe { hostfn::bot_random() }
 }
 
 /// Logs a message to the game console in the programming scene.

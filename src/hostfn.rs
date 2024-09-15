@@ -62,7 +62,7 @@ extern "C" {
     /// # Returns
     ///
     /// A random `f32` value between 0 (inclusive) and 1 (inclusive).
-    pub fn random() -> f32;
+    pub fn bot_random() -> f32;
 }
 
 /// Sends a message to the game server over TCP using the R-Protocol [TYPE, SIZE, BYTES].
