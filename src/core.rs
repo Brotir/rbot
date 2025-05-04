@@ -262,7 +262,14 @@ pub fn await_aim(component_id: i32, angle: f32, slack: f32) -> Result<(), Messag
 /// ```
 pub fn await_component(component_id: i32) -> Result<(), MessageError> {
     await_action()?;
-    while component_state(component_id)?.cooldown > 0.0 {
+    loop {
+        let state = component_state(component_id)?;
+        if state.cooldown <= 0.0 {
+            break;
+        }
+        if state.health <= 0.0 {
+            break;
+        }
         sleep(0.01);
     }
     Ok(())
