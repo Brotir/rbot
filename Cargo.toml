@@ -1,6 +1,6 @@
 [package]
 name = "rbot"
-version = "0.1.7"
+version = "0.1.8"
 edition = "2021"
 description = "Library for programming robots in Bot Beats."
 license = "Apache-2.0"
